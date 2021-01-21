@@ -11,12 +11,10 @@
 4. 编译命令修改：
     1. 修改`ci.yml`中`command`内容
     2. 如需使用特殊的env，请在`command`中加入export命令
-    
-其他更多gradle使用和配置，请参考[baidu/macross/framework](http://icode.baidu.com/repos/baidu/macross/framework/tree/master)工程配置。
 
 **以下为README模板，请参照填写！！！**
 # noadapter
-简要说明
+极简的RecyclerView Adapter 库，可以让开发人员专注于ViewHolder的开发，从而忽略繁冗的adapter的编写和viewholder与model的映射。
 
 ## 快速开始
 如何构建、安装、运行

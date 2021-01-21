@@ -1,2 +1,5 @@
-rootProject.name = 'noadapter'
+include ':library'
+include ':example'
+include ':compiler'
+include ':annotation'
 

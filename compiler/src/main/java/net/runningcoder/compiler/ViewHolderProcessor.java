@@ -54,7 +54,7 @@ public class ViewHolderProcessor extends AbstractProcessor {
         //        ClassName arrayList = ClassName.get("java.util", "ArrayList");
         //        ClassName hashMap = ClassName.get("java.util", "HashMap");
         System.out.println("============Enter ViewHolderProcessor===========");
-        //属性
+        // 属性
         FieldSpec size =
                 FieldSpec.builder(TypeName.INT, "size",
                         Modifier.PRIVATE, Modifier.STATIC)

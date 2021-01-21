@@ -2,6 +2,7 @@
  * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
  */
 package com.baidu.hmi.adpater;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;

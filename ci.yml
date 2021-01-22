@@ -12,13 +12,25 @@ Profiles:
     release: True
 
   - profile:
-    name: publish
+    name: all
     env: ubuntu
     command: sh ./upload.sh
     release: True
 
   - profile:
-    name: test_qa
-    env: UBUNTU
-    command: chmod +x ./build_test.sh && ./build_test.sh
-    release: True
+      name: annotation
+      env: ubuntu
+      command: sh ./upload.sh annotation
+      release: True
+
+  - profile:
+      name: compiler
+      env: ubuntu
+      command: sh ./upload.sh compiler
+      release: True
+
+  - profile:
+      name: library
+      env: ubuntu
+      command: sh ./upload.sh library
+      release: True

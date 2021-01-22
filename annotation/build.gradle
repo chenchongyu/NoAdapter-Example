@@ -10,7 +10,7 @@ def artifactId = "no-adapter-annotation"
 def env
 
 task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
+    from sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
 

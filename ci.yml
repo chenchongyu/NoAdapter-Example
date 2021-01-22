@@ -1,18 +1,24 @@
 Global:
-    tool : build_submitter
+  tool: build_submitter
 
 Default:
-    profile : [dev]
+  profile: [release]
 
 Profiles:
-    - profile:
-      name : dev
-      env : DECK_CENTOS6U3_K3
-      command : sh build.sh
-      release : true
+  - profile:
+    name: release
+    env: UBUNTU
+    command: chmod +x ./build.sh && ./build.sh
+    release: True
 
-    - profile:
-      name :  publish
-      env : DECK_CENTOS6U3_K3
-      command : sh publish.sh
-      release : true
+  - profile:
+    name: publish
+    env: ubuntu
+    command: sh ./upload.sh
+    release: True
+
+  - profile:
+    name: test_qa
+    env: UBUNTU
+    command: chmod +x ./build_test.sh && ./build_test.sh
+    release: True

@@ -12,3 +12,35 @@ dependencies {
     implementation 'com.squareup:javapoet:1.10.0'
     implementation project(':annotation')
 }
+
+
+def group = 'com.baidu.adt'
+def version = ANNOTATION_PROCESSOR_VERSION
+def artifactId = "no-adapter-annotation-processor"
+def env
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
+def mavenUsername = ""
+def mavenPassword = ""
+if (hasProperty('mavenUsername')) mavenUsername = getProperty('mavenUsername')
+if (hasProperty('mavenPassword')) mavenPassword = getProperty('mavenPassword')
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            env = version.endsWith('SNAPSHOT') ? 'Baidu_Local_Snapshots' : 'Baidu_Local'
+            repository(url: "http://maven.baidu-int.com/nexus/content/repositories/$env") {
+                authentication(userName: mavenUsername, password: mavenPassword)
+            }
+            pom.version = version
+            pom.artifactId = artifactId
+            pom.groupId = group
+        }
+    }
+}

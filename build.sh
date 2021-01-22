@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
+#云端打包脚本
 
-# Be sure your script exit whenever encounter errors
-set -e
+echo  "**************************打包开始**************************"
+#!/bin/bash
+source ./env.sh
+echo  "**************************1**************************"
+#source ./version.sh
+mkdir -p output
+echo  "**************************2**************************"
+chmod +x ./gradlew
+echo  "**************************3**************************"
+./gradlew assembleRelease
+echo  "**************************4**************************"
 
-source ./cmc.sh
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 
-gradle clean build
+#cp ./app/build/outputs/apk/release/*.apk ./output
+#cp ./app/build/outputs/mapping/release/mapping.txt ./output
 
-./postBuild.sh
+echo -e "**************************打包完成**************************"

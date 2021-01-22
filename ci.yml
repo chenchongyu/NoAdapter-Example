@@ -18,19 +18,19 @@ Profiles:
     release: True
 
   - profile:
-      name: annotation
-      env: ubuntu
-      command: sh ./upload.sh annotation
-      release: True
+    name: annotation
+    env: ubuntu
+    command: sh ./upload.sh annotation
+    release: True
 
   - profile:
-      name: compiler
-      env: ubuntu
-      command: sh ./upload.sh compiler
-      release: True
+    name: compiler
+    env: ubuntu
+    command: sh ./upload.sh compiler
+    release: True
 
   - profile:
-      name: library
-      env: ubuntu
-      command: sh ./upload.sh library
-      release: True
+    name: library
+    env: ubuntu
+    command: sh ./upload.sh library
+    release: True

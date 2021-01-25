@@ -14,9 +14,13 @@ buildscript {
     repositories {
         jcenter()
         // 添加阿里云 maven 地址
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'http://maven.applib.baidu-int.com:8681/repository/applib-public/' }
+        // 添加阿里云 maven 地址
+        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public-snapshots/' }
+        maven { url 'http://maven.scm.baidu.com:8081/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//        maven { url 'http://172.18.53.2:8081/nexus/content/groups/public' }
+        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public/' }
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -33,12 +37,13 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        maven {
-            url "http://maven.baidu-int.com/nexus/content/groups/public-snapshots"
-        }
-        maven {
-            url "http://maven.baidu-int.com/nexus/content/groups/public"
-        }
+        maven { url 'http://maven.applib.baidu-int.com:8681/repository/applib-public/' }
+        // 添加阿里云 maven 地址
+        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public-snapshots/' }
+        maven { url 'http://maven.scm.baidu.com:8081/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//        maven { url 'http://172.18.53.2:8081/nexus/content/groups/public' }
+        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public/' }
     }
 }
 

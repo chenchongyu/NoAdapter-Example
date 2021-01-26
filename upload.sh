@@ -3,7 +3,7 @@ source ./env.sh
 rm -rf output
 mkdir -p output
 
-export /home/scmtools/buildkit/gradle/
+export GRADLE_HOME=/home/scmtools/buildkit/gradle/
 #cp build../gradlew output
 cd output
 #tar cvzf android.tar.gz *

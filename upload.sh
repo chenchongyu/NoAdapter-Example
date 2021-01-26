@@ -15,6 +15,7 @@ java -version
 echo "set again"
 export JAVA_HOME=/home/scmtools/buildkit/jdk-1.8u92
 export PATH=JAVA_HOME:$PATH
+export PATH=/home/scmtools/buildkit/gradle/gradle-5.4.1/bin:$PATH
 java -version
 
 library=$1

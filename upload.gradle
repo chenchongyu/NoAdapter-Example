@@ -10,9 +10,6 @@ def version = library.version
 def artifactId = library.artifactId
 def env
 
-artifacts {
-    archives sourcesJar
-}
 def mavenUsername = ""
 def mavenPassword = ""
 if (hasProperty('mavenUsername')) mavenUsername = getProperty('mavenUsername')

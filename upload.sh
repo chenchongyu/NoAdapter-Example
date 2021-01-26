@@ -18,6 +18,7 @@ export PATH=JAVA_HOME:$PATH
 java -version
 
 library=$1
+echo "收到参数：$library"
 ./gradlew -v
 if [ library == "" ]; then
   ./gradlew upload

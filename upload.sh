@@ -1,4 +1,5 @@
 #!/bin/bash
+source ./env.sh
 rm -rf output
 mkdir -p output
 #cp build../gradlew output

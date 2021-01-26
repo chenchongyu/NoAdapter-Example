@@ -24,7 +24,7 @@ echo "收到参数：$library"
 if [ library == "" ]; then
   ./gradlew upload
 else
-  ./gradlew :library:upload -PLIBRARY=library
+  ./gradlew :library:upload -PLIBRARY=$library
 
 fi
 

@@ -5,8 +5,8 @@ ext {
     ]
 
     library = [
-        version:"0.0.1-SNAPSHOT",
-        artifactId:"no-adapter"
+            version:"0.0.1-SNAPSHOT",
+            artifactId:"no-adapter"
     ]
 
     annotation = [

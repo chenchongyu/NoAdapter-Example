@@ -1,36 +1,5 @@
 apply plugin: 'java'
+
 apply plugin: 'maven'
-
-sourceCompatibility = JavaVersion.VERSION_1_7
-targetCompatibility = JavaVersion.VERSION_1_7
-
-def group = 'com.baidu.adt'
-def version = ANNOTATION_VERSION
-def artifactId = "no-adapter-annotation"
-def env
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
-}
-def mavenUsername = ""
-def mavenPassword = ""
-if (hasProperty('mavenUsername')) mavenUsername = getProperty('mavenUsername')
-if (hasProperty('mavenPassword')) mavenPassword = getProperty('mavenPassword')
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            env = version.endsWith('SNAPSHOT') ? 'Baidu_Local_Snapshots' : 'Baidu_Local'
-            repository(url: "http://maven.baidu-int.com/nexus/content/repositories/$env") {
-                authentication(userName: mavenUsername, password: mavenPassword)
-            }
-            pom.version = version
-            pom.artifactId = artifactId
-            pom.groupId = group
-        }
-    }
-}
+apply from: '../config.gradle'
+apply from: '../upload.gradle'

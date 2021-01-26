@@ -1,0 +1,17 @@
+ext {
+    compiler = [
+        version:"0.0.1-SNAPSHOT",
+        artifactId:"no-adapter-annotation-processor"
+    ]
+
+    library = [
+        version:"0.0.1-SNAPSHOT",
+        artifactId:"no-adapter"
+    ]
+
+    annotation = [
+            version:"0.0.1-SNAPSHOT",
+            artifactId:"no-adapter-annotation"
+    ]
+
+}

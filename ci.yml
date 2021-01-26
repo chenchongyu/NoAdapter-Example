@@ -1,6 +1,9 @@
 Global:
   tool: build_submitter
-
+  languages:
+    # Java Version: 1.7, 1.8, 9, 10
+    - language: java
+      version: 1.8
 Default:
   profile: [release]
 
@@ -13,13 +16,13 @@ Profiles:
 
   - profile:
     name: all
-    env: ubuntu
+    env: UBUNTU
     command: sh ./upload.sh
     release: True
 
   - profile:
     name: annotation
-    env: ubuntu
+    env: UBUNTU
     command: sh ./upload.sh annotation
     release: True
 

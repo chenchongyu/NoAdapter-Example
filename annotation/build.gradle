@@ -3,3 +3,8 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply from: '../config.gradle'
 apply from: '../upload.gradle'
+
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}

@@ -21,7 +21,7 @@ dependencies {
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
     implementation 'com.squareup:javapoet:1.10.0'
     if (Boolean.parseBoolean(PIPELINE)){
-        implementation 'com.baidu.adt:no-adapter-annotation:${annotation.version}'
+        implementation "com.baidu.adt:no-adapter-annotation:${annotation.version}"
     }else {
         implementation project(':annotation')
     }

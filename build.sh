@@ -13,7 +13,7 @@ echo  "**************************3**************************"
 
 gradle --build-cache build
 
-./gradlew assembleRelease -PPIPELINE=true
+./gradlew assembleRelease
 echo  "**************************4**************************"
 
 if [ $? -ne 0 ]; then

@@ -13,7 +13,7 @@ Profiles:
     build:
       command: chmod +x ./build.sh && ./build.sh
       cache:
-        enable: true
+        enable: false
         paths:
           - .gradle
     artifacts:

@@ -25,7 +25,7 @@ Profiles:
     environment:
       cluster: UBUNTU
     build:
-      command: chmod +x ./build.sh && ./build.sh
+      command: sh ./upload.sh
       cache:
         enable: true
         paths:
@@ -39,7 +39,7 @@ Profiles:
     environment:
       cluster: UBUNTU
     build:
-      command: chmod +x ./build.sh && ./build.sh
+      command: sh ./upload.sh annotation
       cache:
         enable: true
         paths:
@@ -53,7 +53,7 @@ Profiles:
     environment:
       cluster: UBUNTU
     build:
-      command: chmod +x ./build.sh && ./build.sh
+      command: sh ./upload.sh compiler
       cache:
         enable: true
         paths:
@@ -67,7 +67,7 @@ Profiles:
     environment:
       cluster: UBUNTU
     build:
-      command: chmod +x ./build.sh && ./build.sh
+      command: sh ./upload.sh library
       cache:
         enable: true
         paths:

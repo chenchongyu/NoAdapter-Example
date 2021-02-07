@@ -10,6 +10,9 @@ mkdir -p output
 echo  "**************************2**************************"
 chmod +x ./gradlew
 echo  "**************************3**************************"
+
+gradle --build-cache build
+
 ./gradlew assembleRelease -PPIPELINE=true
 echo  "**************************4**************************"
 

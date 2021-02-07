@@ -10,30 +10,65 @@ Default:
 Profiles:
   - profile:
     name: release
-    env: UBUNTU
-    command: chmod +x ./build.sh && ./build.sh
-    release: True
+    environment:
+      cluster: UBUNTU
+    build:
+      command: chmod +x ./build.sh && ./build.sh
+      cache:
+        enable: true
+        paths:
+          - .gradle
+    artifacts:
+      release: true
 
   - profile:
     name: all
-    env: UBUNTU
-    command: sh ./upload.sh
-    release: True
+    environment:
+      cluster: UBUNTU
+    build:
+      command: chmod +x ./build.sh && ./build.sh
+      cache:
+        enable: true
+        paths:
+          - .gradle
+    artifacts:
+      release: true
 
   - profile:
     name: annotation
-    env: UBUNTU
-    command: sh ./upload.sh annotation
-    release: True
+    environment:
+      cluster: UBUNTU
+    build:
+      command: chmod +x ./build.sh && ./build.sh
+      cache:
+        enable: true
+        paths:
+          - .gradle
+    artifacts:
+      release: true
 
   - profile:
     name: compiler
-    env: ubuntu
-    command: sh ./upload.sh compiler
-    release: True
+    environment:
+      cluster: UBUNTU
+    build:
+      command: chmod +x ./build.sh && ./build.sh
+      cache:
+        enable: true
+        paths:
+          - .gradle
+    artifacts:
+      release: true
 
   - profile:
     name: library
-    env: ubuntu
-    command: sh ./upload.sh library
-    release: True
+    environment:
+      cluster: UBUNTU
+    build:
+      command: chmod +x ./build.sh && ./build.sh
+      cache:
+        enable: true
+        paths:
+          - .gradle
+    artifacts:
+      release: true

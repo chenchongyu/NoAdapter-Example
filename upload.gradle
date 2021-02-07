@@ -14,6 +14,10 @@ def mavenUsername = ""
 def mavenPassword = ""
 if (hasProperty('mavenUsername')) mavenUsername = getProperty('mavenUsername')
 if (hasProperty('mavenPassword')) mavenPassword = getProperty('mavenPassword')
+println "mavenUsername ->$mavenUsername"
+println "mavenPassword ->$mavenPassword"
+mavenUsername="gradle_upload"
+mavenPassword="gradleupload"
 uploadArchives {
     repositories {
         mavenDeployer {

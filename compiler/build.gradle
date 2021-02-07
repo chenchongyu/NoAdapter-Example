@@ -20,6 +20,10 @@ dependencies {
     implementation 'com.google.auto.service:auto-service:1.0-rc2'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
     implementation 'com.squareup:javapoet:1.10.0'
-//    debugImplementation project(':annotation')
-    implementation 'com.baidu.adt:no-adapter-annotation:0.0.1-SNAPSHOT'
+    if (Boolean.parseBoolean(PIPELINE)){
+        implementation 'com.baidu.adt:no-adapter-annotation:0.0.1-SNAPSHOT'
+    }else {
+        implementation project(':annotation')
+    }
+
 }

@@ -48,7 +48,11 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-//    debugApi project(':annotation')
-    api 'com.baidu.adt:no-adapter-annotation:0.0.1-SNAPSHOT'
+
+    if (Boolean.parseBoolean(PIPELINE)){
+        api 'com.baidu.adt:no-adapter-annotation:0.0.1-SNAPSHOT'
+    }else {
+        api project(':annotation')
+    }
 }
 

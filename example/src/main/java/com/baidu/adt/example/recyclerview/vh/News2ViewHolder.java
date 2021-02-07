@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import net.runningcoder.annotation.ViewHolder;
+import com.baidu.hmi.annotation.ViewHolder;
 
 @ViewHolder(cls = News.class, type = 2, filed = "type")
 public class News2ViewHolder extends BaseVH<News> {

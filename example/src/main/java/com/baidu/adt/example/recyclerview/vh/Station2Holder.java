@@ -6,7 +6,7 @@ import com.baidu.hmi.adpater.BaseVH;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import net.runningcoder.annotation.ViewHolder;
+import com.baidu.hmi.annotation.ViewHolder;
 
 @ViewHolder
 public class Station2Holder extends BaseVH<User> {

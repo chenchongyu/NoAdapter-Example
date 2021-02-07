@@ -1,4 +1,7 @@
-package net.runningcoder.compiler;
+/*
+ * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ */
+package com.baidu.hmi.compiler;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -31,7 +34,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
-import net.runningcoder.annotation.ViewHolder;
+import com.baidu.hmi.annotation.ViewHolder;
 
 @AutoService(Processor.class)
 public class ViewHolderProcessor extends AbstractProcessor {

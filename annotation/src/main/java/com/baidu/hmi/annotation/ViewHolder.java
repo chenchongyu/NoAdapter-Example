@@ -1,4 +1,7 @@
-package net.runningcoder.annotation;
+/*
+ * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ */
+package com.baidu.hmi.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

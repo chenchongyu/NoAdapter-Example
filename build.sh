@@ -10,7 +10,7 @@ mkdir -p output
 echo  "**************************2**************************"
 chmod +x ./gradlew
 echo  "**************************3**************************"
-./gradlew assembleRelease
+./gradlew assembleRelease -PPIPELINE=true
 echo  "**************************4**************************"
 
 if [ $? -ne 0 ]; then

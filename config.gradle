@@ -1,6 +1,6 @@
 ext {
     compiler = [
-        version:"1.0.0",
+        version:"1.1.0",
         artifactId:"no-adapter-annotation-processor"
     ]
 
@@ -10,7 +10,7 @@ ext {
     ]
 
     annotation = [
-            version:"1.0.0",
+            version:"1.1.0",
             artifactId:"no-adapter-annotation"
     ]
 

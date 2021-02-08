@@ -34,7 +34,6 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
-import com.baidu.hmi.annotation.ViewHolder;
 
 @AutoService(Processor.class)
 public class ViewHolderProcessor extends AbstractProcessor {

@@ -18,6 +18,7 @@ artifacts {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.auto.service:auto-service:1.0-rc6'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
     implementation 'com.squareup:javapoet:1.10.0'
     if (Boolean.parseBoolean(PIPELINE)){
@@ -25,7 +26,7 @@ dependencies {
     }else {
         implementation project(':annotation')
     }
-
+//    implementation "com.baidu.hmi:no-adapter-annotation:1.1.0-SNAPSHOT"
 }
 
 

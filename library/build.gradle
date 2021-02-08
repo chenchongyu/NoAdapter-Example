@@ -40,7 +40,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     if (Boolean.parseBoolean(PIPELINE)){
-        api "com.baidu.adt:no-adapter-annotation:$annotation.version"
+        api "com.baidu.hmi:no-adapter-annotation:$annotation.version"
     }else {
         api project(':annotation')
     }

@@ -5,7 +5,7 @@
 def cl = LIBRARY
 def library = ext.get(cl)
 println "library---$library.version $library.artifactId"
-def group = 'com.baidu.adt'
+def group = 'com.baidu.hmi'
 def version = library.version
 def artifactId = library.artifactId
 def env

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.baidu.hmi.annotation.ViewHolder;
 
+
 @ViewHolder
 public class Station2Holder extends BaseVH<User> {
     private ImageView imageView;

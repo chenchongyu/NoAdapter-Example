@@ -8,6 +8,7 @@ import com.baidu.adt.example.recyclerview.model.News;
 import com.baidu.adt.example.recyclerview.model.User;
 import com.baidu.hmi.adpater.NoAdapter;
 import com.baidu.hmi.adpater.OnItemClickListener;
+import com.baidu.hmi.module_example.Student;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -40,12 +41,12 @@ public class RecyclerTestAct extends FragmentActivity {
     private void initData() {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        allList.add(new News(1, "乔丹退役",
+        allList.add(new News(3, "乔丹退役",
                 "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2133214656,"
                         + "3573702769&fm=27&gp=0.jpg"));
-        //            for (int i = 0; i < 3; i++) {
-        //                allList.add(new GroupItem("第" + i + "条item！"));
-        //            }
+        for (int i = 0; i < 3; i++) {
+            allList.add(new GroupItem("第" + i + "条item！"));
+        }
         allList.add(new News(2, "科比退役2",
                 "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2133214656,"
                         + "3573702769&fm=27&gp=0.jpg"));
@@ -55,6 +56,8 @@ public class RecyclerTestAct extends FragmentActivity {
         }
         allList.add(new User(R.drawable.girl3));
         allList.add(new User(R.drawable.girl5));
+        allList.add(new Student("我是小明啊"));
+        allList.add(new Student("我是小丽啊"));
 
         adapter = new NoAdapter(allList);
         adapter.setListener(new OnItemClickListener() {

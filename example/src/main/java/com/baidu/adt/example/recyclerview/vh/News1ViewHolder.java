@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.baidu.hmi.annotation.ViewHolder;
 
-@ViewHolder(cls = News.class, type = 1, filed = "type")
+@ViewHolder(cls = News.class, type = 2, filed = "type")
 public class News1ViewHolder extends BaseVH<News> {
     private TextView textView;
     private ImageView imageView;

@@ -21,18 +21,9 @@ public class NoAdapter
     private static final String TAG = "NoAdapter";
     protected List dataList;
     private OnItemClickListener listener;
-    private Class<?> viewHolderRegistry;
 
     public NoAdapter(List dataList) {
         this.dataList = dataList;
-        try {
-            viewHolderRegistry = Class.forName(
-                    "com.baidu.adu.noadapter.compiler.ViewHolderRegistry");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("viewHolderRegistry class not found! please add "
-                    + "noAdapter annotationProcessor! ");
-        }
     }
 
     public void setData(List dataList) {
@@ -47,11 +38,10 @@ public class NoAdapter
     public BaseVH<?> onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseVH<?> viewHolder = null;
         String err;
+
         try {
-            Method getVHClassMethod = viewHolderRegistry.getMethod("getVHClass", int.class);
-            Class<?> vhClass = (Class<?>) getVHClassMethod.invoke(null, viewType);
-            //            Class<?> vhClass = ViewHolderRegistry.getVHClass(viewType);
-            Log.d(TAG, "getItemViewType -->" + vhClass);
+            Class<?> vhClass = ViewHolderRegistry.getVHClass(viewType);
+            Log.d(TAG, "getItemViewType -->" + viewType + "：" + vhClass);
             err = " get vh class by " + viewType + " is null. please check ViewHolderRegistry.";
             if (vhClass == null) {
                 throw new IllegalArgumentException("create viewHolder failed." + err);
@@ -110,29 +100,7 @@ public class NoAdapter
 
     @Override
     public int getItemViewType(int position) {
-        Object data = dataList.get(position);
-        //        Integer itemViewType = ViewHolderRegistry.getItemViewType(data);
-        try {
-            Method getItemViewTypeMethod = viewHolderRegistry.getMethod("getItemViewType",
-                    Object.class);
-            Integer itemViewType = (Integer) getItemViewTypeMethod.invoke(null, data);
-            Log.d(TAG, "getItemViewType -->" + position + ":" + data + ":" + itemViewType);
-            if (itemViewType == null) {
-                throw new IllegalArgumentException(
-                        "Can't find Item type by class ->" + data.getClass().getName()
-                                + ".Did you forget add vh annotation on your ViewHolder class ?");
-            }
-            return itemViewType;
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        return -1;
+        return ViewHolderRegistry.getItemViewType(dataList.get(position));
     }
 
 }

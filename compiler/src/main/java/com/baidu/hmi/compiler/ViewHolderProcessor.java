@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -24,7 +25,9 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.util.Elements;
+import javax.tools.Diagnostic;
 
+import com.baidu.hmi.annotation.IVHRegistry;
 import com.baidu.hmi.annotation.ViewHolder;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.CodeBlock;
@@ -36,9 +39,13 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 
+
 @AutoService(Processor.class)
 public class ViewHolderProcessor extends AbstractProcessor {
     private static final String PKG = "com.baidu.adu.noadapter.compiler";
+    private static final String OPTION_MODULE_NAME = "moduleName";
+    @Deprecated
+    private static final int MODULE_SPACE = 1000; // 每个module持有的viewholder数量
     private Elements elementUtils;
 
     @Override
@@ -57,16 +64,34 @@ public class ViewHolderProcessor extends AbstractProcessor {
         //        ClassName arrayList = ClassName.get("java.util", "ArrayList");
         //        ClassName hashMap = ClassName.get("java.util", "HashMap");
         System.out.println("============Enter ViewHolderProcessor===========");
+        Messager messager = processingEnv.getMessager();
+        String moduleName = processingEnv.getOptions().get(OPTION_MODULE_NAME);
+        if (moduleName == null) {
+            messager.printMessage(Diagnostic.Kind.ERROR, "No option " + OPTION_MODULE_NAME +
+                    " passed to annotation processor");
+            return false;
+        }
+
+        // 防止hashCode出现负数
+        int moduleIdx = (moduleName.hashCode() & Integer.MAX_VALUE) + MODULE_SPACE;
         // 属性
         FieldSpec size =
                 FieldSpec.builder(TypeName.INT, "size",
                         Modifier.PRIVATE, Modifier.STATIC)
                         .build();
 
-        FieldSpec modelList =
-                FieldSpec.builder(ParameterizedTypeName.get(List.class, Class.class), "modelList",
+        //        FieldSpec modelList =
+        //                FieldSpec.builder(ParameterizedTypeName.get(List.class, Class.class),
+        //                "modelList",
+        //                        Modifier.PRIVATE, Modifier.STATIC)
+        //                        .initializer("new $T()", ArrayList.class)
+        //                        .build();
+
+        FieldSpec dataTypeMaps =
+                FieldSpec.builder(ParameterizedTypeName.get(Map.class, Class.class, Integer.class),
+                        "dataTypeMaps",
                         Modifier.PRIVATE, Modifier.STATIC)
-                        .initializer("new $T()", ArrayList.class)
+                        .initializer("new $T()", HashMap.class)
                         .build();
 
         FieldSpec vhTypeMaps =
@@ -76,10 +101,10 @@ public class ViewHolderProcessor extends AbstractProcessor {
                         .initializer("new $T()", HashMap.class)
                         .build();
 
-        FieldSpec modelTypeMap =
+        FieldSpec multiTypeMap =
                 FieldSpec.builder(ParameterizedTypeName.get(Map.class, Class.class,
                         String.class),
-                        "modelTypeMap",
+                        "multiTypeMap",
                         Modifier.PRIVATE, Modifier.STATIC)
                         .initializer("new $T()", HashMap.class)
                         .build();
@@ -103,10 +128,15 @@ public class ViewHolderProcessor extends AbstractProcessor {
 
         Set<? extends Element> elements =
                 roundEnvironment.getElementsAnnotatedWith(ViewHolder.class);
-        // getGeneric方法
+        // 构造方法
+        MethodSpec constructor = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addCode(initCode(elements, moduleIdx))
+                .build();
 
+        // getGeneric方法
         MethodSpec getGeneric = MethodSpec.methodBuilder("getGeneric")
-                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .addModifiers(Modifier.PRIVATE)
                 .addParameter(Class.class, "vhClass")
                 .returns(Class.class)
                 .addCode(getGenericCode())
@@ -114,15 +144,15 @@ public class ViewHolderProcessor extends AbstractProcessor {
 
         // getItemViewType
         MethodSpec getItemViewType = MethodSpec.methodBuilder("getItemViewType")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addModifiers(Modifier.PUBLIC)
                 .addParameter(Object.class, "data")
                 .returns(int.class)
-                .addCode(getItemViewTypeCode())
+                .addCode(getItemViewTypeCode(moduleIdx))
                 .build();
 
         // indexOf
         MethodSpec indexOf = MethodSpec.methodBuilder("indexOf")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addModifiers(Modifier.PUBLIC)
                 .addParameter(Class.class, "cls")
                 .addParameter(int.class, "anInt")
                 .returns(int.class)
@@ -131,21 +161,25 @@ public class ViewHolderProcessor extends AbstractProcessor {
 
         // getVHClass
         MethodSpec getVHClass = MethodSpec.methodBuilder("getVHClass")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addModifiers(Modifier.PUBLIC)
                 .addParameter(int.class, "type")
                 .returns(Class.class)
                 .addStatement(CodeBlock.of("return vhTypeMaps.get(type)"))
                 .build();
         // 类
-        TypeSpec clazz = TypeSpec.classBuilder("ViewHolderRegistry")
+        TypeSpec clazz = TypeSpec.classBuilder("ViewHolderRegistry$" + moduleName)
                 .addModifiers(Modifier.PUBLIC)
+                .addSuperinterface(IVHRegistry.class)
                 .addField(size)
                 //                .addField(vhList)
-                .addField(modelList)
+                //                .addField(modelList)
+                .addField(dataTypeMaps)
                 .addField(vhTypeMaps)
-                .addField(modelTypeMap)
+                .addField(multiTypeMap)
                 .addField(multiValueMap)
-                .addStaticBlock(initCode(elements))
+                // 新版本去掉，改成构造方法
+                //                .addStaticBlock(initCode(elements))
+                .addMethod(constructor)
                 .addMethod(getGeneric)
                 .addMethod(indexOf)
                 .addMethod(getItemViewType)
@@ -182,9 +216,9 @@ public class ViewHolderProcessor extends AbstractProcessor {
      * public static Integer getItemViewType(Object data) {
      * Class<?> cls = data.getClass();
      * int[] values = multiValueMap.get(cls);
-     * if (values != null && modelTypeMap.get(cls) != null) {
+     * if (values != null && multiTypeMap.get(cls) != null) {
      * try {
-     * Field field = cls.getDeclaredField(modelTypeMap.get(cls));
+     * Field field = cls.getDeclaredField(multiTypeMap.get(cls));
      * field.setAccessible(true);
      * int anInt = field.getInt(data);
      * int i = indexOf(cls, anInt);
@@ -203,31 +237,33 @@ public class ViewHolderProcessor extends AbstractProcessor {
      * return modelList.indexOf(cls);
      * }
      *
+     * @param moduleIdx
      * @return
      */
-    private CodeBlock getItemViewTypeCode() {
+    private CodeBlock getItemViewTypeCode(int moduleIdx) {
         CodeBlock.Builder builder = CodeBlock.builder();
         builder.addStatement("Class<?> cls = data.getClass()");
         builder.addStatement("$T values = multiValueMap.get(cls)", int[].class);
 
-        builder.beginControlFlow("if (values != null && modelTypeMap.get(cls) != null)");
-        builder.add(getTryCatchCode());
+        builder.beginControlFlow("if (values != null && multiTypeMap.get(cls) != null)");
+        builder.add(getTryCatchCode(moduleIdx));
         builder.endControlFlow();
-        builder.addStatement("return modelList.indexOf(cls)");
+        builder.addStatement("return dataTypeMaps.get(cls) == null ? -1 : dataTypeMaps.get(cls)");
         return builder.build();
     }
 
-    private CodeBlock getTryCatchCode() {
+    private CodeBlock getTryCatchCode(int moduleIdx) {
         CodeBlock.Builder builder = CodeBlock.builder();
         builder.beginControlFlow("try");
-        builder.addStatement("$T field = cls.getDeclaredField(modelTypeMap.get(cls))", Field.class);
+        builder.addStatement("$T field = cls.getDeclaredField(multiTypeMap.get(cls))", Field.class);
         builder.addStatement("field.setAccessible(true)");
         builder.addStatement("int anInt = field.getInt(data)");
         builder.addStatement("int i = indexOf(cls, anInt) + 1");
-        builder.beginControlFlow("if (i != -1)");
-        builder.addStatement("return i * size");
+        builder.beginControlFlow("if (i != 0)");
+        builder.addStatement("return i + size + $L", moduleIdx);
         builder.nextControlFlow("else");
-        builder.addStatement("System.err.println(\"find type value by \" + cls + \" is error"
+        builder.addStatement("System.err.println(getClass().getSimpleName()+\" find type value by"
+                + " \" + cls + \" is error"
                 + ".\")");
         builder.endControlFlow();
         builder.nextControlFlow("catch ($T e)", NoSuchFieldException.class);
@@ -253,7 +289,7 @@ public class ViewHolderProcessor extends AbstractProcessor {
         return builder.build();
     }
 
-    private CodeBlock initCode(Set<? extends Element> elements) {
+    private CodeBlock initCode(Set<? extends Element> elements, int moduleIdx) {
 
         CodeBlock.Builder builder = CodeBlock.builder();
         builder.addStatement("size = $L", elements.size());
@@ -263,8 +299,11 @@ public class ViewHolderProcessor extends AbstractProcessor {
             if (element.getAnnotation(ViewHolder.class).type() > 0) {
                 multiValueList.add(element);
             } else {
-                builder.addStatement("vhTypeMaps.put($L,$L.class)", i, element.asType());
-                builder.addStatement("modelList.add(getGeneric($L.class))", element.asType());
+                int idx = moduleIdx + i;
+                builder.addStatement("vhTypeMaps.put($L,$L.class)", idx,
+                        element.asType());
+                builder.addStatement("dataTypeMaps.put(getGeneric($L.class),$L)",
+                        element.asType(), idx);
                 i++;
             }
         }
@@ -274,7 +313,8 @@ public class ViewHolderProcessor extends AbstractProcessor {
         if (multiValueList.size() > 0) {
             Map<String, List<Integer>> map = new HashMap<>();
             for (Element element : multiValueList) {
-                builder.addStatement("vhTypeMaps.put($L * size,$L.class)", i + 1, element.asType());
+                builder.addStatement("vhTypeMaps.put($L + $L + size,$L.class)", i + 1, moduleIdx,
+                        element.asType());
                 ViewHolder annotation = element.getAnnotation(ViewHolder.class);
 
                 String cls = "";
@@ -289,7 +329,7 @@ public class ViewHolderProcessor extends AbstractProcessor {
                     cls = mte.getTypeMirror().toString();
                 }
 
-                builder.addStatement("modelTypeMap.put($L.class,$S)", cls, annotation.filed());
+                builder.addStatement("multiTypeMap.put($L.class,$S)", cls, annotation.filed());
 
                 if (map.get(cls) == null) {
                     List<Integer> list = new ArrayList<>();

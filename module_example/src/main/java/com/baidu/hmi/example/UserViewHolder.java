@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
  */
-package com.baidu.hmi.module_example;
+package com.baidu.hmi.example;
 
 import com.baidu.hmi.adpater.BaseVH;
 

@@ -8,7 +8,7 @@ import com.baidu.adt.example.recyclerview.model.News;
 import com.baidu.adt.example.recyclerview.model.User;
 import com.baidu.hmi.adpater.NoAdapter;
 import com.baidu.hmi.adpater.OnItemClickListener;
-import com.baidu.hmi.module_example.Student;
+import com.baidu.hmi.example.Student;
 
 import android.os.Bundle;
 import android.widget.Toast;

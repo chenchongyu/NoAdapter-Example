@@ -15,7 +15,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ViewHolderRegistry.add(new ViewHolderRegistry$app());
-        ViewHolderRegistry.add(new ViewHolderRegistry$module());
+        // 引入gradle plugin之后可以省略这个注册过程
+//        ViewHolderRegistry.add(new ViewHolderRegistry$app());
+//        ViewHolderRegistry.add(new ViewHolderRegistry$module());
     }
 }

@@ -8,8 +8,36 @@ import java.util.List;
 
 import com.baidu.hmi.annotation.IVHRegistry;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 public class ViewHolderRegistry {
+    private static final String TAG = ViewHolderRegistry.class.getSimpleName();
     private static List<IVHRegistry> list = new ArrayList<>();
+
+    static {
+        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$module");
+        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$app");
+        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$test");
+    }
+
+    public static void add(String className) {
+        Log.i(TAG, "registe by plugin");
+        if (!TextUtils.isEmpty(className)) {
+            try {
+                Class<?> clazz = Class.forName(className);
+                Object obj = clazz.getConstructor().newInstance();
+                if (obj instanceof IVHRegistry) {
+                    add((IVHRegistry) obj);
+                } else {
+                    Log.i(TAG, "register failed, class name: " + className
+                            + " should implements IVHRegistry");
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "register class error:" + className + " --> " + e.getMessage());
+            }
+        }
+    }
 
     public static void add(IVHRegistry ivhRegistry) {
         list.add(ivhRegistry);

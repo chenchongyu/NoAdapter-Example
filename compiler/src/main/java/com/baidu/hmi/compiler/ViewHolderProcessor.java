@@ -38,8 +38,6 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
-
-
 @AutoService(Processor.class)
 public class ViewHolderProcessor extends AbstractProcessor {
     private static final String PKG = "com.baidu.adu.noadapter.compiler";
@@ -47,6 +45,7 @@ public class ViewHolderProcessor extends AbstractProcessor {
     @Deprecated
     private static final int MODULE_SPACE = 1000; // 每个module持有的viewholder数量
     private Elements elementUtils;
+    private boolean first = true;
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -63,139 +62,147 @@ public class ViewHolderProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         //        ClassName arrayList = ClassName.get("java.util", "ArrayList");
         //        ClassName hashMap = ClassName.get("java.util", "HashMap");
-        System.out.println("============Enter ViewHolderProcessor===========");
-        Messager messager = processingEnv.getMessager();
-        String moduleName = processingEnv.getOptions().get(OPTION_MODULE_NAME);
-        if (moduleName == null) {
-            messager.printMessage(Diagnostic.Kind.ERROR, "No option " + OPTION_MODULE_NAME +
-                    " passed to annotation processor");
-            return false;
-        }
+        if (first) {
+            first = false;
+            System.out.println("============Enter ViewHolderProcessor===========");
+            Messager messager = processingEnv.getMessager();
+            String moduleName = processingEnv.getOptions().get(OPTION_MODULE_NAME);
+            if (moduleName == null) {
+                messager.printMessage(Diagnostic.Kind.ERROR, "No option " + OPTION_MODULE_NAME +
+                        " passed to annotation processor");
+                return false;
+            }
 
-        // 防止hashCode出现负数
-        int moduleIdx = (moduleName.hashCode() & Integer.MAX_VALUE) + MODULE_SPACE;
-        // 属性
-        FieldSpec size =
-                FieldSpec.builder(TypeName.INT, "size",
-                        Modifier.PRIVATE, Modifier.STATIC)
-                        .build();
+            // 防止hashCode出现负数
+            int moduleIdx = (moduleName.hashCode() & Integer.MAX_VALUE) + MODULE_SPACE;
+            // 属性
+            FieldSpec size =
+                    FieldSpec.builder(TypeName.INT, "size",
+                            Modifier.PRIVATE, Modifier.STATIC)
+                            .build();
 
-        //        FieldSpec modelList =
-        //                FieldSpec.builder(ParameterizedTypeName.get(List.class, Class.class),
-        //                "modelList",
-        //                        Modifier.PRIVATE, Modifier.STATIC)
-        //                        .initializer("new $T()", ArrayList.class)
-        //                        .build();
+            //        FieldSpec modelList =
+            //                FieldSpec.builder(ParameterizedTypeName.get(List.class, Class.class),
+            //                "modelList",
+            //                        Modifier.PRIVATE, Modifier.STATIC)
+            //                        .initializer("new $T()", ArrayList.class)
+            //                        .build();
 
-        FieldSpec dataTypeMaps =
-                FieldSpec.builder(ParameterizedTypeName.get(Map.class, Class.class, Integer.class),
-                        "dataTypeMaps",
-                        Modifier.PRIVATE, Modifier.STATIC)
-                        .initializer("new $T()", HashMap.class)
-                        .build();
+            FieldSpec dataTypeMaps =
+                    FieldSpec.builder(
+                            ParameterizedTypeName.get(Map.class, Class.class, Integer.class),
+                            "dataTypeMaps",
+                            Modifier.PRIVATE, Modifier.STATIC)
+                            .initializer("new $T()", HashMap.class)
+                            .build();
 
-        FieldSpec vhTypeMaps =
-                FieldSpec.builder(ParameterizedTypeName.get(Map.class, Integer.class, Class.class),
-                        "vhTypeMaps",
-                        Modifier.PRIVATE, Modifier.STATIC)
-                        .initializer("new $T()", HashMap.class)
-                        .build();
+            FieldSpec vhTypeMaps =
+                    FieldSpec.builder(
+                            ParameterizedTypeName.get(Map.class, Integer.class, Class.class),
+                            "vhTypeMaps",
+                            Modifier.PRIVATE, Modifier.STATIC)
+                            .initializer("new $T()", HashMap.class)
+                            .build();
 
-        FieldSpec multiTypeMap =
-                FieldSpec.builder(ParameterizedTypeName.get(Map.class, Class.class,
-                        String.class),
-                        "multiTypeMap",
-                        Modifier.PRIVATE, Modifier.STATIC)
-                        .initializer("new $T()", HashMap.class)
-                        .build();
-        // 泛型嵌套
-        //        ParameterizedTypeName subType = ParameterizedTypeName.get(List.class, Integer
-        //        .class);
-        //        FieldSpec multiValueMap =
-        //                FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(Map.class),
-        //                        ClassName.get(Class.class), subType),
-        //                        "multiValueMap",
-        //                        Modifier.PRIVATE, Modifier.STATIC)
-        //                        .initializer("new $T()", HashMap.class)
-        //                        .build();
+            FieldSpec multiTypeMap =
+                    FieldSpec.builder(ParameterizedTypeName.get(Map.class, Class.class,
+                            String.class),
+                            "multiTypeMap",
+                            Modifier.PRIVATE, Modifier.STATIC)
+                            .initializer("new $T()", HashMap.class)
+                            .build();
+            // 泛型嵌套
+            //        ParameterizedTypeName subType = ParameterizedTypeName.get(List.class, Integer
+            //        .class);
+            //        FieldSpec multiValueMap =
+            //                FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(Map.class),
+            //                        ClassName.get(Class.class), subType),
+            //                        "multiValueMap",
+            //                        Modifier.PRIVATE, Modifier.STATIC)
+            //                        .initializer("new $T()", HashMap.class)
+            //                        .build();
 
-        FieldSpec multiValueMap =
-                FieldSpec.builder(ParameterizedTypeName.get(Map.class, Class.class, int[].class),
-                        "multiValueMap",
-                        Modifier.PRIVATE, Modifier.STATIC)
-                        .initializer("new $T()", HashMap.class)
-                        .build();
+            FieldSpec multiValueMap =
+                    FieldSpec
+                            .builder(ParameterizedTypeName.get(Map.class, Class.class, int[].class),
+                                    "multiValueMap",
+                                    Modifier.PRIVATE, Modifier.STATIC)
+                            .initializer("new $T()", HashMap.class)
+                            .build();
 
-        Set<? extends Element> elements =
-                roundEnvironment.getElementsAnnotatedWith(ViewHolder.class);
-        // 构造方法
-        MethodSpec constructor = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addCode(initCode(elements, moduleIdx))
-                .build();
-
-        // getGeneric方法
-        MethodSpec getGeneric = MethodSpec.methodBuilder("getGeneric")
-                .addModifiers(Modifier.PRIVATE)
-                .addParameter(Class.class, "vhClass")
-                .returns(Class.class)
-                .addCode(getGenericCode())
-                .build();
-
-        // getItemViewType
-        MethodSpec getItemViewType = MethodSpec.methodBuilder("getItemViewType")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(Object.class, "data")
-                .returns(int.class)
-                .addCode(getItemViewTypeCode(moduleIdx))
-                .build();
-
-        // indexOf
-        MethodSpec indexOf = MethodSpec.methodBuilder("indexOf")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(Class.class, "cls")
-                .addParameter(int.class, "anInt")
-                .returns(int.class)
-                .addCode(indexOfCode())
-                .build();
-
-        // getVHClass
-        MethodSpec getVHClass = MethodSpec.methodBuilder("getVHClass")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(int.class, "type")
-                .returns(Class.class)
-                .addStatement(CodeBlock.of("return vhTypeMaps.get(type)"))
-                .build();
-        // 类
-        TypeSpec clazz = TypeSpec.classBuilder("ViewHolderRegistry$" + moduleName)
-                .addModifiers(Modifier.PUBLIC)
-                .addSuperinterface(IVHRegistry.class)
-                .addField(size)
-                //                .addField(vhList)
-                //                .addField(modelList)
-                .addField(dataTypeMaps)
-                .addField(vhTypeMaps)
-                .addField(multiTypeMap)
-                .addField(multiValueMap)
-                // 新版本去掉，改成构造方法
-                //                .addStaticBlock(initCode(elements))
-                .addMethod(constructor)
-                .addMethod(getGeneric)
-                .addMethod(indexOf)
-                .addMethod(getItemViewType)
-                .addMethod(getVHClass)
-                .build();
-        try {
-            System.out.println("============APT开始创建文件===========");
-            JavaFile build = JavaFile.builder(PKG, clazz)
-                    .indent("    ")
-                    .addFileComment("\nAutomatically generated file. DO NOT MODIFY\n")
-                    .skipJavaLangImports(false)
+            Set<? extends Element> elements =
+                    roundEnvironment.getElementsAnnotatedWith(ViewHolder.class);
+            // 构造方法
+            MethodSpec constructor = MethodSpec.constructorBuilder()
+                    .addModifiers(Modifier.PUBLIC)
+                    .addCode(initCode(elements, moduleIdx))
                     .build();
-            System.out.println(build.toString());
-            build.writeTo(processingEnv.getFiler());
-        } catch (final IOException e) {
-            e.printStackTrace();
+
+            // getGeneric方法
+            MethodSpec getGeneric = MethodSpec.methodBuilder("getGeneric")
+                    .addModifiers(Modifier.PRIVATE)
+                    .addParameter(Class.class, "vhClass")
+                    .returns(Class.class)
+                    .addCode(getGenericCode())
+                    .build();
+
+            // getItemViewType
+            MethodSpec getItemViewType = MethodSpec.methodBuilder("getItemViewType")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(Object.class, "data")
+                    .returns(int.class)
+                    .addCode(getItemViewTypeCode(moduleIdx))
+                    .build();
+
+            // indexOf
+            MethodSpec indexOf = MethodSpec.methodBuilder("indexOf")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(Class.class, "cls")
+                    .addParameter(int.class, "anInt")
+                    .returns(int.class)
+                    .addCode(indexOfCode())
+                    .build();
+
+            // getVHClass
+            MethodSpec getVHClass = MethodSpec.methodBuilder("getVHClass")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(int.class, "type")
+                    .returns(Class.class)
+                    .addStatement(CodeBlock.of("return vhTypeMaps.get(type)"))
+                    .build();
+            // 类
+            TypeSpec clazz = TypeSpec.classBuilder("ViewHolderRegistry$" + moduleName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addSuperinterface(IVHRegistry.class)
+                    .addField(size)
+                    //                .addField(vhList)
+                    //                .addField(modelList)
+                    .addField(dataTypeMaps)
+                    .addField(vhTypeMaps)
+                    .addField(multiTypeMap)
+                    .addField(multiValueMap)
+                    // 新版本去掉，改成构造方法
+                    //                .addStaticBlock(initCode(elements))
+                    .addMethod(constructor)
+                    .addMethod(getGeneric)
+                    .addMethod(indexOf)
+                    .addMethod(getItemViewType)
+                    .addMethod(getVHClass)
+                    .build();
+            try {
+                System.out.println("============APT开始创建文件===========");
+                JavaFile build = JavaFile.builder(PKG, clazz)
+                        .indent("    ")
+                        .addFileComment("\nAutomatically generated file. DO NOT MODIFY\n")
+                        .skipJavaLangImports(false)
+                        .build();
+                System.out.println(build.toString());
+                build.writeTo(processingEnv.getFiler());
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("not first process! IGNORE!");
         }
         return false;
     }

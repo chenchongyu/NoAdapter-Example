@@ -3,9 +3,6 @@
  */
 package com.baidu.adt.example.recyclerview;
 
-import com.baidu.adu.noadapter.compiler.ViewHolderRegistry$app;
-import com.baidu.adu.noadapter.compiler.ViewHolderRegistry$module;
-import com.baidu.hmi.adpater.ViewHolderRegistry;
 
 import android.app.Application;
 

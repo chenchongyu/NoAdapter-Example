@@ -16,9 +16,9 @@ public class ViewHolderRegistry {
     private static List<IVHRegistry> list = new ArrayList<>();
 
     static {
-        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$module");
-        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$app");
-        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$test");
+//        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$module");
+//        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$app");
+//        add("com.baidu.adu.noadapter.compiler.ViewHolderRegistry$test");
     }
 
     public static void add(String className) {

@@ -1,6 +1,9 @@
+include ':buildSrc'
+include ':plugin'
 include ':module_example'
 include ':library'
 include ':example'
 include ':compiler'
 include ':annotation'
+include ':buildSrc'
 

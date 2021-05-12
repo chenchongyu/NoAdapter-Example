@@ -171,7 +171,7 @@ public class ViewHolderProcessor extends AbstractProcessor {
                     .addStatement(CodeBlock.of("return vhTypeMaps.get(type)"))
                     .build();
             // 类
-            TypeSpec clazz = TypeSpec.classBuilder("ViewHolderRegistry$" + moduleName)
+            TypeSpec clazz = TypeSpec.classBuilder("ViewHolderRegistry_" + moduleName)
                     .addModifiers(Modifier.PUBLIC)
                     .addSuperinterface(IVHRegistry.class)
                     .addField(size)
@@ -196,7 +196,7 @@ public class ViewHolderProcessor extends AbstractProcessor {
                         .addFileComment("\nAutomatically generated file. DO NOT MODIFY\n")
                         .skipJavaLangImports(false)
                         .build();
-                System.out.println(build.toString());
+//                System.out.println(build.toString());
                 build.writeTo(processingEnv.getFiler());
             } catch (final IOException e) {
                 e.printStackTrace();

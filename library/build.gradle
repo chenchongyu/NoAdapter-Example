@@ -1,8 +1,9 @@
 /*
- * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ * Copyright 2021 ccy.All Rights Reserved
  */
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
+//apply plugin: 'com.github.dcendents.android-maven'
 
 apply from: '../config.gradle'
 apply from: '../upload.gradle'
@@ -48,7 +49,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     if (Boolean.parseBoolean(PIPELINE)){
-        api "com.baidu.hmi:no-adapter-annotation:$annotation.version"
+        api "com.runningcode.noadapter:no-adapter-annotation:$annotation.version"
     }else {
         api project(':annotation')
     }

@@ -5,15 +5,12 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.baidu.adt.noadapter.demo"
+        applicationId "com.runningcode.noadapter.demo"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName '1.1.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters "armeabi-v7a"
-        }
 
         javaCompileOptions {
             annotationProcessorOptions {

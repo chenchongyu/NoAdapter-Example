@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ * Copyright 2021 ccy.All Rights Reserved
  */
-package com.baidu.hmi.example;
+package com.runningcode.noadapter.example;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,6 +24,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.baidu.hmi.module_example.test", appContext.getPackageName());
+        assertEquals("com.runningcode.noadapter.module_example.test", appContext.getPackageName());
     }
 }

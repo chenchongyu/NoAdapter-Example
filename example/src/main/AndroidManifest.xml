@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.baidu.adt.example.recyclerview">
-    
+    package="com.runningcode.noadapter.example.recyclerview">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

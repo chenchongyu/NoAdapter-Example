@@ -23,11 +23,11 @@ dependencies {
     implementation 'com.squareup:javapoet:1.10.0'
 
     if (Boolean.parseBoolean(PIPELINE)){
-        implementation "com.baidu.hmi:no-adapter-annotation:${annotation.version}"
+        implementation "com.runningcode.noadapter:no-adapter-annotation:${annotation.version}"
     }else {
         implementation project(':annotation')
     }
-//    implementation "com.baidu.hmi:no-adapter-annotation:1.1.0-SNAPSHOT"
+//    implementation "com.runningcode.noadapter:no-adapter-annotation:1.1.0-SNAPSHOT"
 }
 
 

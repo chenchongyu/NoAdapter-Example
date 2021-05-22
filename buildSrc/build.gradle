@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ * Copyright 2021 ccy.All Rights Reserved
  */
 apply plugin: 'groovy'
 

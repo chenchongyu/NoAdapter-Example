@@ -1,15 +1,15 @@
 /*
- * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ * Copyright 2021 ccy.All Rights Reserved
  */
-package com.baidu.hmi.example;
+package com.runningcode.noadapter.example;
 
-import com.baidu.hmi.adpater.BaseVH;
+import com.runningcode.noadapter.adpater.adpater.BaseVH;
 
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 
-import com.baidu.hmi.annotation.ViewHolder;
+import com.runningcode.noadapter.annotation.ViewHolder;
 
 @ViewHolder
 public class UserViewHolder extends BaseVH<Student> {

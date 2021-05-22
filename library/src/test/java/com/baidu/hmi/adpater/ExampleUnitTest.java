@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
+ * Copyright 2021 ccy.All Rights Reserved
  */
-package com.baidu.hmi.adpater;
+package com.runningcode.noadapter.adpater;
 
 import org.junit.Test;
 

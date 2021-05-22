@@ -1,17 +1,22 @@
 ext {
     compiler = [
-        version:"2.0.0-SNAPSHOT",
+        version:"1.0.0-SNAPSHOT",
         artifactId:"no-adapter-annotation-processor"
     ]
 
     library = [
-            version:"2.0.0-SNAPSHOT",
+            version:"1.0.0-SNAPSHOT",
             artifactId:"no-adapter"
     ]
 
     annotation = [
-            version:"2.0.0-SNAPSHOT",
+            version:"1.0.0-SNAPSHOT",
             artifactId:"no-adapter-annotation"
+    ]
+
+    plugin = [
+            version:"1.0.0-SNAPSHOT",
+            artifactId:"no-adapter-plugin"
     ]
 
 }

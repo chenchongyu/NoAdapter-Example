@@ -1,23 +1,14 @@
-
 buildscript {
     repositories {
         jcenter()
         // 添加阿里云 maven 地址
-        maven { url 'http://maven.applib.baidu-int.com:8681/repository/applib-public/' }
-        // 添加阿里云 maven 地址
-        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public-snapshots/' }
-        maven { url 'http://maven.scm.baidu.com:8081/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-//        maven { url 'http://172.18.53.2:8081/nexus/content/groups/public' }
-        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public/' }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        google()
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
-//        classpath 'net.'
+        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -26,12 +17,8 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        maven { url 'http://maven.applib.baidu-int.com:8681/repository/applib-public/' }
         // 添加阿里云 maven 地址
-        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public-snapshots/' }
-        maven { url 'http://maven.scm.baidu.com:8081/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-//        maven { url 'http://172.18.53.2:8081/nexus/content/groups/public' }
-        maven { url 'http://maven.baidu-int.com/nexus/content/groups/public/' }
+        google()
     }
 }

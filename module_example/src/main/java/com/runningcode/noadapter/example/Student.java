@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 ccy.All Rights Reserved
+ * Copyright (C) 2021 Baidu, Inc. All Rights Reserved.
  */
 package com.runningcode.noadapter.example;
 

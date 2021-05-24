@@ -1,4 +1,2 @@
-
+include ':example'
 include ':module_example'
-
-

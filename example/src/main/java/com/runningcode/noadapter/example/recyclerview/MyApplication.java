@@ -17,7 +17,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         // 引入gradle plugin之后可以省略这个注册过程
-        ViewHolderRegistry.add(new ViewHolderRegistry_app());
-        ViewHolderRegistry.add(new ViewHolderRegistry_module());
+//        ViewHolderRegistry.add(new ViewHolderRegistry_app());
+//        ViewHolderRegistry.add(new ViewHolderRegistry_module());
     }
 }

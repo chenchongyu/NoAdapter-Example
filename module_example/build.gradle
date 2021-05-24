@@ -44,6 +44,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    api project(':library')
-    annotationProcessor project(":compiler")
+    api 'com.github.chenchongyu:NoAdapter-Library:v1.0.0.0'
+    annotationProcessor 'com.github.chenchongyu:NoAdapter-Compiler:v1.0.0.1'
 }

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'no-adapter-test'
 
 android {
     compileSdkVersion 28
@@ -66,7 +65,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation project(':module_example')
-    annotationProcessor project(":compiler")
+//    annotationProcessor project(":compiler")
+    annotationProcessor 'com.github.chenchongyu:NoAdapter-Compiler:v1.0.0.1'
 }
 
 

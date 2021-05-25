@@ -2,7 +2,7 @@ package com.runningcode.noadapter.example.recyclerview.vh;
 
 import com.runningcode.noadapter.example.recyclerview.R;
 import com.runningcode.noadapter.example.recyclerview.model.News;
-import com.runningcode.noadapter.adpater.adpater.BaseVH;
+import com.runningcode.noadapter.adpater.BaseVH;
 import com.bumptech.glide.Glide;
 
 import android.view.ViewGroup;

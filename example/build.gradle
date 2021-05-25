@@ -27,8 +27,8 @@ android {
 
     buildTypes {
         debug {
-//            shrinkResources true
-//            minifyEnabled true
+            shrinkResources true
+            minifyEnabled true
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

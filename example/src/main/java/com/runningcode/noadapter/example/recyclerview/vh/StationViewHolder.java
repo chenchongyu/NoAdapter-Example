@@ -1,8 +1,8 @@
 package com.runningcode.noadapter.example.recyclerview.vh;
 
+import com.runningcode.noadapter.adpater.BaseVH;
 import com.runningcode.noadapter.example.recyclerview.R;
 import com.runningcode.noadapter.example.recyclerview.model.GroupItem;
-import com.runningcode.noadapter.adpater.adpater.BaseVH;
 
 import android.view.ViewGroup;
 import android.widget.TextView;

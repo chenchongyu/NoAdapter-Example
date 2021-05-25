@@ -4,10 +4,6 @@
 package com.runningcode.noadapter.example.recyclerview;
 
 
-import com.runningcode.noadapter.adpater.adpater.ViewHolderRegistry;
-import com.runningcode.noadapter.compiler.ViewHolderRegistry_app;
-import com.runningcode.noadapter.compiler.ViewHolderRegistry_module;
-
 import android.app.Application;
 
 public class MyApplication extends Application {

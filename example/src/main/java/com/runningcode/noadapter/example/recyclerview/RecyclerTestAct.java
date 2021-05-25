@@ -3,11 +3,11 @@ package com.runningcode.noadapter.example.recyclerview;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.runningcode.noadapter.adpater.NoAdapter;
+import com.runningcode.noadapter.adpater.OnItemClickListener;
 import com.runningcode.noadapter.example.recyclerview.model.GroupItem;
 import com.runningcode.noadapter.example.recyclerview.model.News;
 import com.runningcode.noadapter.example.recyclerview.model.User;
-import com.runningcode.noadapter.adpater.adpater.NoAdapter;
-import com.runningcode.noadapter.adpater.adpater.OnItemClickListener;
 import com.runningcode.noadapter.example.Student;
 
 import android.os.Bundle;

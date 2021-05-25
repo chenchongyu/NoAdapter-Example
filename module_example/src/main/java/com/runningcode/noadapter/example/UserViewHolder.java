@@ -3,12 +3,11 @@
  */
 package com.runningcode.noadapter.example;
 
-import com.runningcode.noadapter.adpater.adpater.BaseVH;
-
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 
+import com.runningcode.noadapter.adpater.BaseVH;
 import com.runningcode.noadapter.annotation.ViewHolder;
 
 @ViewHolder
